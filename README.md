@@ -1,11 +1,39 @@
 # Infra-Web_PlayGround
 
-<br><br><br><br><br><br>
-
 ## GCP qwiklabs 실습
 - 인스턴스 설정 : @@.md
 
-## 환경 변수 설정
+<br><br><br><br><br><br>
+
+## 작업 1 : 환경 구성
+이 섹션에서는 조정할 수있는 개발 환경의 측면에 대해 알아 봅니다.
+
+### 지역 및 영역 이해
+특정 Google Compute Engine 리소스는 지역 또는 영역에 있습니다. 지역은 리소스를 실행할 수있는 특정 지리적 위치입니다. 각 지역에는 하나 이상의 영역이 있습니다. 예를 들어, us-central1지역은 지역이 중앙 미국에있는 지역이다 us-central1-a, us-central1-b, us-central1-c,와 us-central1-f. 다음 이미지는 해당 지역의 영역을 보여줍니다.
+![image](https://user-images.githubusercontent.com/31065684/121498849-ca2df480-ca17-11eb-8f4c-59bdcffae11b.png)
+
+### 기본 리전 및 영역 설정을 확인하려면 다음 명령어를 실행하세요.
+
+gcloud config get-value compute/zone
+gcloud config get-value compute/region
+는 IF google-compute-default-region또는 google-compute-default-zone응답이, (해제) 의미 기본 영역 또는 영역이 설정되어 있지 않은 것이다.
+
+### 기본 지역 및 영역 식별
+프로젝트 ID를 클립 보드 또는 텍스트 편집기에 복사합니다. 프로젝트 ID는 다음 두 위치에 나열됩니다.
+
+Google Cloud Console의 대시 보드에있는 프로젝트 정보 아래에 있습니다. ( 탐색 메뉴 ( 탐색 메뉴)를 클릭 한 다음 홈> 대시 보드 를 클릭 합니다.)
+
+사용자 이름과 비밀번호 근처의 Qwiklabs 탭에서.
+
+Cloud Shell에서 복사 한 프로젝트 ID로 gcloud바꾼 다음 명령어를 실행합니다 <your_project_ID>.
+
+gcloud compute project-info describe --project <your_project_ID>
+출력에서 기본 영역 및 지역 메타 데이터 값을 찾습니다. google-compute-default-zone이 실습 뒷부분에서 출력 의 영역 ( )을 사용합니다 .
+
+은 IF google-compute-default-region와 google-compute-default-zone키 값의 출력에서 누락, 기본 영역 또는 영역이 설정되지 않는다.
+
+
+### 환경 변수 설정
 - 환경 변수는 환경을 정의하고 API 또는 실행 파일이 포함 된 스크립트를 작성할 때 시간을 절약하는 데 도움이됩니다.
 - 프로젝트 ID를 저장할 환경 변수를 만들고 이전에 실행 한 명령어의 이름<your_project_ID> 값으로 바꿉니다 .gcloud compute project-info describe
 ```
@@ -22,7 +50,7 @@ echo $ZONE
 ```
 - 변수가 올바르게 설정된 경우 echo 명령은 프로젝트 ID와 영역을 출력합니다.
 
-## gcloud 도구로 가상 머신 만들기
+### gcloud 도구로 가상 머신 만들기
 - 이 gcloud도구를 사용하여 새 VM (가상 머신) 인스턴스를 만듭니다.
 
 VM을 만들려면 다음 명령어를 실행하세요.
@@ -46,7 +74,7 @@ gcelab2 VM의 이름입니다.
 
 --zone플래그 를 생략하면 gcloud도구가 기본 속성을 기반으로 원하는 영역을 유추 할 수 있습니다. machine type및과 같은 기타 필수 인스턴스 설정 image은 create명령에 지정되지 않은 경우 기본값으로 설정됩니다 .
 
-## gcloud 명령어 살펴보기
+### gcloud 명령어 살펴보기
 이 gcloud도구는 명령 -h끝에 플래그 (도움말 용)를 추가하여 사용할 수있는 간단한 사용 지침을 제공합니다 gcloud.
 
 다음 명령을 실행하십시오.
